@@ -13,7 +13,6 @@ import {
   Export,
   Tooltip,
 } from 'devextreme-react/polar-chart';
-import { Radar } from 'react-chartjs-2';
 //------------------------------------------
 // Cons
 //------------------------------------------
