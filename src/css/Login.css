@@ -1,3 +1,7 @@
+body{
+    background-color: #DEE8E6;
+}
+
 .mainContainer{
     position: absolute;
     left: 50%;
@@ -5,9 +9,15 @@
     transform: translate(-50%, -50%);
     border: 1px solid blue;
     padding: 40px;
-    background-color: white;
+    background-color: #BCEAE1;
 }
 
 .secondContainer{
     text-align: center;
 }
+
+.myImage{
+    text-align: center;
+    padding: 20px;
+}
+

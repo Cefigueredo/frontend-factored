@@ -13,6 +13,8 @@ import {
   Export,
   Tooltip,
 } from 'devextreme-react/polar-chart';
+import BrandExample from './Navbar'
+import Footer from './Footer'
 //------------------------------------------
 // Cons
 //------------------------------------------
@@ -72,43 +74,45 @@ export default class Home extends Component {
     }
     return (
       <Container className='container'>
-
-        <div className='flex-container'>
-          <Avatar {...stringAvatar(cookies.get('name'))} />
+        <BrandExample/>
+        <h1 className='profile'>Profile</h1>
+        <div className=''>
+          <div className='flex-container'>
+            <Avatar {...stringAvatar(cookies.get('name'))} />
+          </div>
+          <div className='flex-container'>
+            <Card style={{ width: '18rem' }}>
+              <ListGroup variant="flush">
+                <ListGroup.Item><b>Name: </b>{cookies.get('name')}</ListGroup.Item>
+                <ListGroup.Item><b>Email: </b>{cookies.get('email')}</ListGroup.Item>
+                <ListGroup.Item><b>Position: </b>{cookies.get('position')}</ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </div>
         </div>
         <div className='flex-container'>
-          <Card style={{ width: '18rem' }}>
-            <ListGroup variant="flush">
-              <ListGroup.Item><b>Name: </b>{cookies.get('name')}</ListGroup.Item>
-              <ListGroup.Item><b>Email: </b>{cookies.get('email')}</ListGroup.Item>
-              <ListGroup.Item><b>Position: </b>{cookies.get('position')}</ListGroup.Item>
-            </ListGroup>
-          </Card>
-          <br/>
-        </div>
-        <div className='flex-container'>
-        <PolarChart
-            id="chart"
-            dataSource={myData}
-            useSpiderWeb={true}
-            title={"Skills of "+cookies.get('name')}
-          >
-            <CommonSeriesSettings type="line" />
-            {
-              scoreSources.map((item) => <Series
-                key={item.value}
-                valueField={item.value}
-                name={item.name} />)
-            }
-            <Export enabled={true} />
-            <Tooltip enabled={true} />
+          <PolarChart
+              id="chart"
+              dataSource={myData}
+              useSpiderWeb={true}
+              title={"Skills of "+cookies.get('name')}
+            >
+              <CommonSeriesSettings type="line" />
+              {
+                scoreSources.map((item) => <Series
+                  key={item.value}
+                  valueField={item.value}
+                  name={item.name} />)
+              }
+              <Export enabled={true} />
+              <Tooltip enabled={true} />
           </PolarChart>
-          
         </div>
-        <div className='flex-container'>
-            
+        <div className='footer'>
+          <Footer/>  
         </div>
     </Container>
+    
     )
   }
 }

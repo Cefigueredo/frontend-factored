@@ -60,6 +60,15 @@ class Login extends Component {
   render() {
     return (
         <div className='mainContainer'>
+            <div className='myImage'>
+                <img
+                alt=""
+                src="../logo.png"
+                width="100"
+                height="100"
+                className="d-inline-block align-top"
+                />{' '}
+            </div>
             <div className='secondContainer'>
                 <div className='fromGroup'>
                     <label>

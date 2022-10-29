@@ -8,3 +8,14 @@
     align-items: center;
     justify-content: center;
 }
+
+.profile{
+    text-align: center;
+    padding-top: 60px;
+}
+
+.footer{
+    text-align: center;
+    align-items: center;
+    align-content: center;
+}
