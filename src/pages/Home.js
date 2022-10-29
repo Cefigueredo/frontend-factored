@@ -6,7 +6,27 @@ import { Container } from 'react-bootstrap'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Avatar from '@mui/material/Avatar';
+import {
+  PolarChart,
+  CommonSeriesSettings,
+  Series,
+  Export,
+  Tooltip,
+} from 'devextreme-react/polar-chart';
 const cookies = new Cookies()
+
+const scoreSources = [
+  { value: 'score', name: 'Skills score' },
+
+];
+
+const skillsData = [{arg: 'Python', score: 70},
+ {arg: 'SQL', score: 70}, 
+ {arg: 'AWS', score: 40}, 
+ {arg: 'API Rest', score: 76}, 
+ {arg: 'Linux', score: 52,},
+ {arg: 'MongoDB', score: 56,}];
+
 export default class Home extends Component {
   render() {
 
@@ -53,6 +73,25 @@ export default class Home extends Component {
               <ListGroup.Item><b>Skills: </b>{cookies.get('skills')}</ListGroup.Item>
             </ListGroup>
           </Card>
+          <br/>
+        </div>
+        <div className='flex-container'>
+        <PolarChart
+            id="chart"
+            dataSource={skillsData}
+            useSpiderWeb={true}
+            title={"Skills of "+cookies.get('name')}
+          >
+            <CommonSeriesSettings type="line" />
+            {
+              scoreSources.map((item) => <Series
+                key={item.value}
+                valueField={item.value}
+                name={item.name} />)
+            }
+            <Export enabled={true} />
+            <Tooltip enabled={true} />
+          </PolarChart>
         </div>
     </Container>
     )
