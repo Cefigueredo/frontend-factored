@@ -23,6 +23,15 @@ class Login extends Component {
         }
     }
 
+    handleChange = async e => {
+        await this.setState({
+            form:{
+                ...this.state.form,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
     // Method to send login information to the backend
     logIn= async ()=>{
         await axios.get(baseUrl, {params: {email: this.state.form.email, password: this.state.form.password}})

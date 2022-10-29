@@ -13,7 +13,7 @@ import {
   Export,
   Tooltip,
 } from 'devextreme-react/polar-chart';
-
+import { Radar } from 'react-chartjs-2';
 //------------------------------------------
 // Cons
 //------------------------------------------
@@ -25,17 +25,15 @@ const scoreSources = [
 
 ];
 
-const skillsData = [{arg: 'Python', score: 70},
- {arg: 'SQL', score: 70}, 
- {arg: 'AWS', score: 40}, 
- {arg: 'API Rest', score: 76}, 
- {arg: 'Linux', score: 52,},
- {arg: 'MongoDB', score: 56,}];
+let mySkills = cookies.get('skills');
 
- //const skills = {'Python': 78, "SQL": 80, 'AWS': 40}
-//  skills.map((item)=>{
+let myData = []
+for(let key in mySkills) {
+  myData.push({arg: key, score: mySkills[key]})
+}
+console.log(myData)
 
-//  })
+
 
 //------------------------------------------
 // Home Class
@@ -85,7 +83,6 @@ export default class Home extends Component {
               <ListGroup.Item><b>Name: </b>{cookies.get('name')}</ListGroup.Item>
               <ListGroup.Item><b>Email: </b>{cookies.get('email')}</ListGroup.Item>
               <ListGroup.Item><b>Position: </b>{cookies.get('position')}</ListGroup.Item>
-              <ListGroup.Item><b>Skills: </b>{cookies.get('skills')}</ListGroup.Item>
             </ListGroup>
           </Card>
           <br/>
@@ -93,7 +90,7 @@ export default class Home extends Component {
         <div className='flex-container'>
         <PolarChart
             id="chart"
-            dataSource={skillsData}
+            dataSource={myData}
             useSpiderWeb={true}
             title={"Skills of "+cookies.get('name')}
           >
@@ -107,6 +104,10 @@ export default class Home extends Component {
             <Export enabled={true} />
             <Tooltip enabled={true} />
           </PolarChart>
+          
+        </div>
+        <div className='flex-container'>
+            
         </div>
     </Container>
     )
