@@ -3,26 +3,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/Login.css'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
-import { useNavigate } from 'react-router-dom'
+
+//------------------------------------------
+// Cons
+//------------------------------------------
+
 const baseUrl = 'http://localhost:8000/';
 const cookies = new Cookies();
-const navigate = useNavigate
-
-const loggingIn = (e) => {
-    navigate('/home',
-        {
-            state: {
-                user_id: e.id,
-                user_name: e.name,
-                user_email: e.email,
-                user_position: e.position,
-                user_skills: e.skills
-            }
-        });
-}
 
 
-
+//------------------------------------------
+// Login Class
+//------------------------------------------
 class Login extends Component {
     state={
         form:{
@@ -31,17 +23,7 @@ class Login extends Component {
         }
     }
 
-    handleChange= async e=>{
-        await this.setState({
-            form:{
-                ...this.state.form,
-                [e.target.name]: e.target.value
-            }
-        })
-        console.log(this.state.form)
-    }
-
-
+    // Method to send login information to the backend
     logIn= async ()=>{
         await axios.get(baseUrl, {params: {email: this.state.form.email, password: this.state.form.password}})
         .then(response => {
@@ -63,6 +45,9 @@ class Login extends Component {
             console.log(error);
         })
     }
+
+
+    // It renders the objects in the body of the page
   render() {
     return (
         <div className='mainContainer'>

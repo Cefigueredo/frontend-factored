@@ -13,6 +13,11 @@ import {
   Export,
   Tooltip,
 } from 'devextreme-react/polar-chart';
+
+//------------------------------------------
+// Cons
+//------------------------------------------
+
 const cookies = new Cookies()
 
 const scoreSources = [
@@ -27,7 +32,17 @@ const skillsData = [{arg: 'Python', score: 70},
  {arg: 'Linux', score: 52,},
  {arg: 'MongoDB', score: 56,}];
 
+ //const skills = {'Python': 78, "SQL": 80, 'AWS': 40}
+//  skills.map((item)=>{
+
+//  })
+
+//------------------------------------------
+// Home Class
+//------------------------------------------
 export default class Home extends Component {
+
+  //It renders the content in the body
   render() {
 
     function stringToColor(string) {
@@ -102,3 +117,4 @@ export default class Home extends Component {
 // Docs
 // https://www.npmjs.com/package/react-spider-chart
 // https://mui.com/material-ui/react-avatar/
+// https://www.pluralsight.com/guides/convert-a-json-file-to-an-array-in-react 
