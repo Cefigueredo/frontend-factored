@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import Cookies from 'universal-cookie'
-
+import '../css/Auth.css'
 
 const baseUrl = 'http://localhost:8000/';
 const cookies = new Cookies();
@@ -82,7 +82,10 @@ export default function (props) {
       }
       return errors
     }
+
+  
   if (authMode === "signin") {
+    // Conditional return in signin ----------------------------------------------------------------
     return (
       <div className="mainContainer">
         <div className='myImage'>
@@ -144,7 +147,7 @@ export default function (props) {
       </div>
     )
   }
-
+  // Conditional return in signup ----------------------------------------------------------------
   return (
     <div className="mainContainer">
         <div className='myImage'>
