@@ -2,6 +2,6 @@
 
 Steps to run the app:
 
-1. npm i
-
-2. npm start
+1. `npm i` to install the dependencies
+ 
+2. `npm start` to run the frontend
