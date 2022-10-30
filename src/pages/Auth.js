@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 
@@ -9,31 +9,26 @@ const cookies = new Cookies();
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
+  const initialValues = { email: "", password: ""}
+  const [formValues, setFormValues] = useState(initialValues)
+  const [formErrors, setFormErrors] = useState({})
+  const [isSubmit, setIsSubmit] = useState(false)
 
-  props={
-    form:{
-        email:"",
-        password:""
-    }
-}
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
 
-  let handleChange = async e => {
-        await props.setState({
-            form:{
-                ...props.form,
-                [e.target.name]: e.target.value
-            }
-        })
-        console.log(props)
+  const handleChange =  e => {
+    const {name, value} = e.target
+    setFormValues({...formValues, [name]: value})
+    console.log(formValues)
+        
     }
     
     const logIn= async ()=>{
         console.log("Login")
-        await axios.get(baseUrl, {params: {email: props.form.email, password: props.form.password}})
+        await axios.get(baseUrl, {params: {email: formValues.email, password: formValues.password}})
         .then(response => {
             console.log(response.data)
             cookies.set('id', response.data.id, {path:"/"})
@@ -55,6 +50,38 @@ export default function (props) {
         })
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setFormErrors(validate(formValues))
+        setIsSubmit(true)
+        logIn()
+    }
+
+    useEffect(() =>{
+      console.log(formErrors)
+      if(Object.keys(formErrors).length === 0 && isSubmit){
+        console.log(formValues)
+      }
+    }, [formErrors])
+
+
+    const validate = (values) => {
+      const errors = {}
+      const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+      if(!values.email){
+        errors.email = "Email required"
+      } else if(regex.test(values.email.value)){
+        errors.email = "This is not a valid email format"
+      }
+      if(!values.password){
+        errors.password = "Password required"
+      } else if(values.password.length < 4){
+        errors.password = "Password must be more than 4 characters"
+      } else if(values.password.length > 20){
+        errors.password = "Password can not be more than 20 characters"
+      }
+      return errors
+    }
   if (authMode === "signin") {
     return (
       <div className="mainContainer">
@@ -68,8 +95,10 @@ export default function (props) {
                 />{' '}
         </div>
         <div className="Auth-form-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
+          {Object.keys(formErrors).length === 0 && isSubmit ?
+          (<div className="ui message success">Signed in succesfully</div>): (<div></div>)}
+        <form className="Auth-form" onSubmit={handleSubmit}>
+          <div className="Auth-form-content ui form" >
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="text-center">
               Not registered yet?{" "}
@@ -77,31 +106,37 @@ export default function (props) {
                 Sign Up
               </span>
             </div>
-            <div className="form-group mt-3">
+            <div className="form-group mt-3 field">
               <label>Email address</label>
               <input
                 type="email"
+                name="email"
                 className="form-control mt-1"
+                value={formValues.email}
                 placeholder="Enter email"
                 onChange={handleChange}
               />
             </div>
-            <div className="form-group mt-3">
+            <p style={{color:"red", fontSize: 12}}>{formErrors.email}</p>
+            <div className="form-group mt-3 field">
               <label>Password</label>
               <input
                 type="password"
+                name="password"
                 className="form-control mt-1"
+                value={formValues.password}
                 placeholder="Enter password"
                 onChange={handleChange}
               />
             </div>
+            <p style={{color:"red", fontSize: 12}}>{formErrors.password}</p>
             <div className="d-grid gap-2 mt-3">
-              <button type="submit" className="btn btn-primary" onClick={()=>logIn()}>
+              <button type="submit" className="btn btn-primary" >
                 Submit
               </button>
             </div>
             <p className="text-center mt-2">
-              Forgot <a href="#">password?</a>
+              Forgot <a href="/">password?</a>
             </p>
           </div>
         </form>
@@ -177,7 +212,7 @@ export default function (props) {
             </button>
           </div>
           <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
+            Forgot <a href="/">password?</a>
           </p>
         </div>
       </form>
