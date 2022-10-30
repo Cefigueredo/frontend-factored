@@ -1,11 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-
-function BrandExample() {
-  return (
-    <>
-      
-      <Navbar bg="dark" variant="dark" fixed='top'>
+import React, { Component } from 'react'
+export default class MyNavbar extends Component {
+  
+  render() {
+    return (
+      <div>
+        <Navbar bg="dark" variant="dark" fixed='top'>
         <Container>
           <Navbar.Brand href="#home">
             <img
@@ -16,11 +17,11 @@ function BrandExample() {
               className="d-inline-block align-top"
             />{' '}
             Factored
+            
           </Navbar.Brand>
         </Container>
       </Navbar>
-    </>
-  );
+      </div>
+    )
+  }
 }
-
-export default BrandExample;

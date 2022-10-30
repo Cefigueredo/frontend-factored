@@ -13,34 +13,41 @@ import {
   Export,
   Tooltip,
 } from 'devextreme-react/polar-chart';
-import BrandExample from './Navbar'
 import Footer from './Footer'
+import MyNavbar from './Navbar'
 //------------------------------------------
 // Cons
 //------------------------------------------
 
 const cookies = new Cookies()
 
-const scoreSources = [
-  { value: 'score', name: 'Skills score' },
 
-];
-
+const scoreSources = [{ value: 'score', name: 'Skills score' },];
+/* if(cookies.get('skills') == null){
+  alert(`You are not logged`)
+} */
 let mySkills = cookies.get('skills');
 
 let myData = []
 for(let key in mySkills) {
   myData.push({arg: key, score: mySkills[key]})
 }
-console.log(myData)
-
-
 
 //------------------------------------------
 // Home Class
 //------------------------------------------
 export default class Home extends Component {
-
+  
+  logOut= async ()=>{
+    console.log("Log Out")
+    alert(`Logging out`)
+    cookies.remove('id')
+    cookies.remove('name')
+    cookies.remove('email')
+    cookies.remove('position')
+    cookies.remove('skills')
+    window.location.href="./"
+  }
   //It renders the content in the body
   render() {
 
@@ -74,7 +81,7 @@ export default class Home extends Component {
     }
     return (
       <Container className='container'>
-        <BrandExample/>
+        <MyNavbar/>
         <h1 className='profile'>Profile</h1>
         <div className=''>
           <div className='flex-container'>
@@ -107,6 +114,9 @@ export default class Home extends Component {
               <Export enabled={true} />
               <Tooltip enabled={true} />
           </PolarChart>
+        </div>
+        <div className='flex-container'>
+          <button className='btn btn-primary' onClick={()=>this.logOut()}>Log Out</button>
         </div>
         <div className='footer'>
           <Footer/>  

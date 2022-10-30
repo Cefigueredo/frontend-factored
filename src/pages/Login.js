@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/Login.css'
 import axios from 'axios'
@@ -11,7 +11,6 @@ import Cookies from 'universal-cookie'
 const baseUrl = 'http://localhost:8000/';
 const cookies = new Cookies();
 
-
 //------------------------------------------
 // Login Class
 //------------------------------------------
@@ -22,7 +21,7 @@ class Login extends Component {
             password:""
         }
     }
-
+    
     handleChange = async e => {
         await this.setState({
             form:{
@@ -32,12 +31,12 @@ class Login extends Component {
         })
     }
 
+    
     // Method to send login information to the backend
     logIn= async ()=>{
         await axios.get(baseUrl, {params: {email: this.state.form.email, password: this.state.form.password}})
         .then(response => {
             console.log(response.data)
-
             cookies.set('id', response.data.id, {path:"/"})
             cookies.set('name', response.data.name, {path:"/"})
             cookies.set('email', response.data.email, {path:"/"})
@@ -46,12 +45,14 @@ class Login extends Component {
             alert(`Hello ${response.data.name}, nice to see you!`)
             window.location.href="./home"
         })
-        .then(response =>{
-            
-                
-        })
         .catch(error=>{
             console.log(error);
+            if(error.message === "Request failed with status code 512"){
+                alert("Missing email or password, please fill the form")
+            } else if((error.message === "Request failed with status code 404")){
+                alert("The email or password is not correct, please try again")
+            }
+                   
         })
     }
 
@@ -76,9 +77,10 @@ class Login extends Component {
                     </label>
                     <br/>
                     <input
-                        type="text"
+                        type="email"
                         className="form-control"
                         name='email'
+                        placeholder="Enter email"
                         onChange={this.handleChange}
                     />
                     <br/>
@@ -88,6 +90,7 @@ class Login extends Component {
                         type="password"
                         className='form-control'
                         name='password'
+                        placeholder="Enter password"
                         onChange={this.handleChange}
                     />
                     <br/>
