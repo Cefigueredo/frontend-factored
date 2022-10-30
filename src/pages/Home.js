@@ -23,9 +23,7 @@ const cookies = new Cookies()
 
 
 const scoreSources = [{ value: 'score', name: 'Skills score' },];
-/* if(cookies.get('skills') == null){
-  alert(`You are not logged`)
-} */
+
 let mySkills = cookies.get('skills');
 
 let myData = []
